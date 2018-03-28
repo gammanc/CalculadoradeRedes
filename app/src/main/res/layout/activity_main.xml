@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/edit_ip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:digits="0123456789."
+        android:maxLength="15"
+        android:inputType="phone"
+        android:hint="Ingrese la dirección IP" />
+
+    <TextView
+        android:id="@+id/text_slash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/edit_ip"
+        android:layout_toEndOf="@id/edit_ip"
+        android:layout_alignBaseline="@id/edit_ip"
+        android:textSize="24sp"
+        android:text="/"/>
+
+    <EditText
+        android:id="@+id/edit_mask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/text_slash"
+        android:layout_toEndOf="@id/text_slash"
+        android:inputType="number"
+        android:maxLength="2"
+        android:hint="Máscara" />
+
+    <Button
+        android:id="@+id/btn_calcular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edit_ip"
+        android:text="Calcular"/>
+
+    <TextView
+        android:id="@+id/text_netmask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_calcular"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/text_netmask"/>
+
+    <TextView
+        android:id="@+id/text_network"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_netmask"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/text_network"/>
+</RelativeLayout>

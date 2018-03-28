@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Calculadora de Redes</string>
+    <string name="text_netmask">Máscara de red:</string>
+    <string name="text_network">Red:</string>
+</resources>
