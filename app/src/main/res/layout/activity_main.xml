@@ -11,6 +11,9 @@
         android:id="@+id/edit_ip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/text_slash"
+        android:textAlignment="center"
         android:digits="0123456789."
         android:maxLength="15"
         android:inputType="phone"
@@ -20,8 +23,7 @@
         android:id="@+id/text_slash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/edit_ip"
-        android:layout_toEndOf="@id/edit_ip"
+        android:layout_toLeftOf="@id/edit_mask"
         android:layout_alignBaseline="@id/edit_ip"
         android:textSize="24sp"
         android:text="/"/>
@@ -30,8 +32,7 @@
         android:id="@+id/edit_mask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/text_slash"
-        android:layout_toEndOf="@id/text_slash"
+        android:layout_alignParentRight="true"
         android:inputType="number"
         android:maxLength="2"
         android:hint="Máscara" />
@@ -62,4 +63,25 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/text_network"/>
+
+    <TextView
+        android:id="@+id/text_broadcast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_network"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/text_broadcast"/>
+
+    <TextView
+        android:id="@+id/text_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_broadcast"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text="---------"/>
+
 </RelativeLayout>
