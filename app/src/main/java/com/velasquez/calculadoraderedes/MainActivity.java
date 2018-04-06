@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         text_hosts = findViewById(R.id.text_hosts);
     }
 
+    //Testing
     View.OnClickListener onClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
