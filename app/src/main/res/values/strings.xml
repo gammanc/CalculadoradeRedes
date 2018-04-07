@@ -3,4 +3,8 @@
     <string name="text_netmask">Máscara de red:</string>
     <string name="text_network">Red:</string>
     <string name="text_broadcast">Broadcast:</string>
+    <string name="netpart">Parte de red :</string>
+    <string name="hostpart">Parte de host :</string>
+    <string name="reserved">Reservada</string>
+    <string name="reservedm">Reservada para Multicast</string>
 </resources>

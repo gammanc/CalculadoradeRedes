@@ -85,4 +85,23 @@
         android:layout_marginStart="8dp"
         android:text="Hosts: "/>
 
+    <TextView
+        android:id="@+id/text_netpart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_hosts"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/netpart"/>
+    <TextView
+        android:id="@+id/text_hostpart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_netpart"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/hostpart"/>
+
 </RelativeLayout>

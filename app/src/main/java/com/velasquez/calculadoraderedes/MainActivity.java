@@ -12,6 +12,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     EditText edit_ip, edit_mask;
     TextView text_netmask, text_network, text_broadcast, text_hosts;
+    TextView text_netpart, text_hostpart;
     Button btn_calcular;
     String network, broadcast;
     int mask[] = new int[4];
@@ -36,9 +37,10 @@ public class MainActivity extends AppCompatActivity {
         text_network = findViewById(R.id.text_network);
         text_broadcast = findViewById(R.id.text_broadcast);
         text_hosts = findViewById(R.id.text_hosts);
+        text_netpart = findViewById(R.id.text_netpart);
+        text_hostpart = findViewById(R.id.text_hostpart);
     }
 
-    //Testing
     View.OnClickListener onClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -47,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
                 getNetMask();
                 getNetwork();
                 getBroadcast();
-                text_hosts.setText("Hosts: " + (int)Math.pow(2, 32-Integer.parseInt(edit_mask.getText().toString())));
+                text_hosts.setText("Hosts: " + (int)Math.pow(2, 32-Integer.parseInt(edit_mask.getText().toString())-2));
+                getNetPart();
             }
             catch (IllegalArgumentException e) {
                 Toast toast = Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);
@@ -102,6 +105,38 @@ public class MainActivity extends AppCompatActivity {
                 + "." + (mip[3] | wildcard[3]);
         text_broadcast.setText(getString(R.string.text_broadcast) + " " + broadcast);
 
-        text_hosts.setText("Wildcard : "+(wildcard[0])+" . "+(wildcard[1])+" . "+(wildcard[2])+" . "+(wildcard[3]));
+        //text_hosts.setText("Wildcard : "+(wildcard[0])+" . "+(wildcard[1])+" . "+(wildcard[2])+" . "+(wildcard[3]));
+    }
+
+    void getNetPart(){
+        String net="", host="";
+        if(mip[0] == 0 || mip[0] ==127){
+            net = getResources().getString(R.string.reserved);
+            host = "N/A";
+        }
+        else if(mip[0]>=1 && mip[0]<=126){
+            net = String.valueOf(mip[0]);
+            host = String.valueOf(mip[1]+"."+mip[2]+"."+mip[3]);
+        }
+        else if(mip[0]>=128 && mip[0]<=191){
+            net = String.valueOf(mip[0]+"."+mip[1]);
+            host = String.valueOf(mip[2]+"."+mip[3]);
+        }
+        else if(mip[0]>=192 && mip[0]<=223){
+            net = String.valueOf(mip[0]+"."+mip[1]+"."+mip[2]);
+            host = String.valueOf(mip[3]);
+        }
+        else if(mip[0]>=224 && mip[0]<=239){
+            net = getResources().getString(R.string.reservedm);
+            host = "N/A";
+        }
+        else if(mip[0]>=240 && mip[0]<=255){
+            net = getResources().getString(R.string.reserved);
+            host = "N/A";
+        }
+        else{ net = host = "Error";}
+
+        text_netpart.setText(getResources().getString(R.string.netpart) + " "+net);
+        text_hostpart.setText(getResources().getString(R.string.hostpart) + " "+host);
     }
 }
