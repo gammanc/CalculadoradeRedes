@@ -43,8 +43,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/edit_ip"
-        android:text="Calcular"/>
+        android:text="@string/calculate"/>
 
+    <Button
+        android:id="@+id/btn_limpiar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edit_ip"
+        android:layout_toRightOf="@id/btn_calcular"
+        android:text="@string/clean"/>
     <TextView
         android:id="@+id/text_netmask"
         android:layout_width="wrap_content"
@@ -54,7 +61,17 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/text_netmask"/>
-
+    <TextView
+        android:id="@+id/text_netmask_v"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_calcular"
+        android:layout_toRightOf="@id/text_netmask"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text=""
+        android:textStyle="bold"/>
     <TextView
         android:id="@+id/text_network"
         android:layout_width="wrap_content"
@@ -64,7 +81,17 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/text_network"/>
-
+    <TextView
+        android:id="@+id/text_network_v"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_netmask"
+        android:layout_toRightOf="@id/text_network"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text=""
+        android:textStyle="bold"/>
     <TextView
         android:id="@+id/text_broadcast"
         android:layout_width="wrap_content"
@@ -74,6 +101,17 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/text_broadcast"/>
+    <TextView
+        android:id="@+id/text_broadcast_v"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_network"
+        android:layout_toRightOf="@id/text_broadcast"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text=""
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/text_hosts"
@@ -84,6 +122,17 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:text="Hosts: "/>
+    <TextView
+        android:id="@+id/text_hosts_v"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_broadcast"
+        android:layout_toRightOf="@id/text_hosts"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text=""
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/text_netpart"
@@ -95,6 +144,18 @@
         android:layout_marginStart="8dp"
         android:text="@string/netpart"/>
     <TextView
+        android:id="@+id/text_netpart_v"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_hosts"
+        android:layout_toRightOf="@id/text_netpart"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text=""
+        android:textStyle="bold"/>
+
+    <TextView
         android:id="@+id/text_hostpart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -103,5 +164,16 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/hostpart"/>
+    <TextView
+        android:id="@+id/text_hostpart_v"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_netpart"
+        android:layout_toRightOf="@id/text_hostpart"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text=""
+        android:textStyle="bold"/>
 
 </RelativeLayout>

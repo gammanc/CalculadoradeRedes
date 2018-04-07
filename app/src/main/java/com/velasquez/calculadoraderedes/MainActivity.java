@@ -13,8 +13,8 @@ public class MainActivity extends AppCompatActivity {
     EditText edit_ip, edit_mask;
     TextView text_netmask, text_network, text_broadcast, text_hosts;
     TextView text_netpart, text_hostpart;
-    Button btn_calcular;
-    String network, broadcast;
+    Button btn_calcular, btn_limpiar;
+    String network, broadcast, hostpart;
     int mask[] = new int[4];
     int wildcard[] = new int[4];
     int mip[] = new int[4];
@@ -33,12 +33,14 @@ public class MainActivity extends AppCompatActivity {
         edit_mask = findViewById(R.id.edit_mask);
         btn_calcular = findViewById(R.id.btn_calcular);
         btn_calcular.setOnClickListener(onClick);
-        text_netmask = findViewById(R.id.text_netmask);
-        text_network = findViewById(R.id.text_network);
-        text_broadcast = findViewById(R.id.text_broadcast);
-        text_hosts = findViewById(R.id.text_hosts);
-        text_netpart = findViewById(R.id.text_netpart);
-        text_hostpart = findViewById(R.id.text_hostpart);
+        btn_limpiar = findViewById(R.id.btn_limpiar);
+        btn_limpiar.setOnClickListener(clean);
+        text_netmask = findViewById(R.id.text_netmask_v);
+        text_network = findViewById(R.id.text_network_v);
+        text_broadcast = findViewById(R.id.text_broadcast_v);
+        text_hosts = findViewById(R.id.text_hosts_v);
+        text_netpart = findViewById(R.id.text_netpart_v);
+        text_hostpart = findViewById(R.id.text_hostpart_v);
     }
 
     View.OnClickListener onClick = new View.OnClickListener() {
@@ -49,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
                 getNetMask();
                 getNetwork();
                 getBroadcast();
-                text_hosts.setText("Hosts: " + (int)Math.pow(2, 32-Integer.parseInt(edit_mask.getText().toString())-2));
-                getNetPart();
+                text_hosts.setText((int)Math.pow(2, 32-Integer.parseInt(edit_mask.getText().toString()))-2+"");
+                getNetHostPart();
             }
             catch (IllegalArgumentException e) {
                 Toast toast = Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);
@@ -60,6 +62,26 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    /*
+    * Limpiar los campos
+    */
+    View.OnClickListener clean = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            edit_ip.setText("");
+            edit_mask.setText("");
+            text_netmask.setText("");
+            text_network.setText("");
+            text_broadcast.setText("");
+            text_hosts.setText("");
+            text_netpart.setText("");
+            text_hostpart.setText("");
+        }
+    };
+
+    /*
+    * Valida que el formato de IP dado sea el correcto
+    * */
     void validateIp() {
         String temp = edit_ip.getText().toString().trim();
         if (temp.isEmpty())
@@ -74,6 +96,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*
+    * Calcula la máscara de la red y la misma negada, necesarias
+    * para los cálculos de red y broadcast
+    * */
     void getNetMask() {
         String temp = edit_mask.getText().toString().trim();
         if (temp.isEmpty())
@@ -90,53 +116,38 @@ public class MainActivity extends AppCompatActivity {
             wildcard[1] = (~mask[1] << 24) >>> 24;
             wildcard[2] = (~mask[2] << 24) >>> 24;
             wildcard[3] = (~mask[3] << 24) >>> 24;
-            text_netmask.setText("Mascara de Red: "+mask[0]+" . "+mask[1]+" . "+mask[2]+" . "+mask[3]);
+            text_netmask.setText(mask[0]+" . "+mask[1]+" . "+mask[2]+" . "+mask[3]);
         }
     }
 
+    /*
+    * Obtiene la ip de red, o net ID, mediante un bitwise AND entre la ip y la máscara
+    * */
     void getNetwork() {
         network = (mask[0] & mip[0]) + "." + (mip[1] & mask[1]) + "." + (mip[2] & mask[2])
                 + "." + (mip[3] & mask[3]);
-        text_network.setText(getString(R.string.text_network) + " " + network);
+        text_network.setText(network);
     }
 
+    /*
+    * Obtiene la ip de broadcast, mediante un bitwise OR entre la ip y la máscara negada
+    * */
     void getBroadcast() {
         broadcast = (wildcard[0] | mip[0]) + "." + (mip[1] | wildcard[1]) + "." + (mip[2] | wildcard[2])
                 + "." + (mip[3] | wildcard[3]);
-        text_broadcast.setText(getString(R.string.text_broadcast) + " " + broadcast);
-
-        //text_hosts.setText("Wildcard : "+(wildcard[0])+" . "+(wildcard[1])+" . "+(wildcard[2])+" . "+(wildcard[3]));
+        text_broadcast.setText(broadcast);
     }
 
-    void getNetPart(){
-        String net="", host="";
-        if(mip[0] == 0 || mip[0] ==127){
-            net = getResources().getString(R.string.reserved);
-            host = "N/A";
-        }
-        else if(mip[0]>=1 && mip[0]<=126){
-            net = String.valueOf(mip[0]);
-            host = String.valueOf(mip[1]+"."+mip[2]+"."+mip[3]);
-        }
-        else if(mip[0]>=128 && mip[0]<=191){
-            net = String.valueOf(mip[0]+"."+mip[1]);
-            host = String.valueOf(mip[2]+"."+mip[3]);
-        }
-        else if(mip[0]>=192 && mip[0]<=223){
-            net = String.valueOf(mip[0]+"."+mip[1]+"."+mip[2]);
-            host = String.valueOf(mip[3]);
-        }
-        else if(mip[0]>=224 && mip[0]<=239){
-            net = getResources().getString(R.string.reservedm);
-            host = "N/A";
-        }
-        else if(mip[0]>=240 && mip[0]<=255){
-            net = getResources().getString(R.string.reserved);
-            host = "N/A";
-        }
-        else{ net = host = "Error";}
-
-        text_netpart.setText(getResources().getString(R.string.netpart) + " "+net);
-        text_hostpart.setText(getResources().getString(R.string.hostpart) + " "+host);
+    /*
+    * Obtiene la parte de host, mediante un bitwise AND entre la ip dada y la máscara negada.
+    * Para el caso de la tarea se asumió que se trabaja con subredes, por lo que la parte de red
+    * se correspondería con la net id
+    * */
+    void getNetHostPart() {
+        String hostp = (wildcard[0] & mip[0]) + "." + (mip[1] & wildcard[1]) + "." + (mip[2] & wildcard[2])
+                + "." + (mip[3] & wildcard[3]);
+        text_netpart.setText(network);
+        text_hostpart.setText(hostp);
     }
+
 }
